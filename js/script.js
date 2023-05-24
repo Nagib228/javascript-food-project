@@ -71,7 +71,7 @@ tabsParent.addEventListener('click', (event) => {
 });
 //                                                                          ТАЙМЕР
 
-const deadLine = '2023-05-20';
+const deadLine = '2023-05-24';
 
 function getTimeRemaining (endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date());
@@ -119,6 +119,41 @@ function setClock (selector, endtime) {
             }
           }
 }
-
 setClock('.timer', deadLine);
+
+//Modal
+
+const modalTrigger = document.querySelectorAll('[data-modal]'),
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
+
+function closeModal() {
+      modal.classList.add('hide');
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+}
+
+modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+
+modalCloseBtn.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+
+document.addEventListener('keydown', (e) => {
+    if(e.code === "Escape" && modal.classList.contains('show')){
+        closeModal();
+    }
+});
+
 });
