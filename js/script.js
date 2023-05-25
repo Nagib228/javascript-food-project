@@ -71,7 +71,7 @@ tabsParent.addEventListener('click', (event) => {
 });
 //                                                                          ТАЙМЕР
 
-const deadLine = '2023-05-24';
+const deadLine = '2023-06-24';
 
 function getTimeRemaining (endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date());
@@ -127,6 +127,13 @@ const modalTrigger = document.querySelectorAll('[data-modal]'),
       modal = document.querySelector('.modal'),
       modalCloseBtn = document.querySelector('[data-close]');
 
+function openModal () {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+        clearInterval(modalTimerId);
+}
+
 function closeModal() {
       modal.classList.add('hide');
       modal.classList.remove('show');
@@ -134,11 +141,7 @@ function closeModal() {
 }
 
 modalTrigger.forEach(btn => {
-    btn.addEventListener('click', () => {
-        modal.classList.add('show');
-        modal.classList.remove('hide');
-        document.body.style.overflow = 'hidden';
-    });
+    btn.addEventListener('click', openModal);
 });
 
 
@@ -155,5 +158,19 @@ document.addEventListener('keydown', (e) => {
         closeModal();
     }
 });
+
+
+// Modification of Modal WIndow
+
+const modalTimerId = setTimeout(openModal, 5000);
+
+function showModalByScroll() {
+    if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight){
+        openModal();
+        window.removeEventListener('scroll', showModalByScroll);
+    }
+}
+
+window.addEventListener('scroll', showModalByScroll);
 
 });
